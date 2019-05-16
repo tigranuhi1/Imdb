@@ -1,50 +1,58 @@
 package com.aca.imdb.engine.user;
 
-import com.aca.imdb.engine.movie.Movie;
-import com.aca.imdb.engine.movie.Movies;
+import com.aca.imdb.engine.HasID;
 
-import java.util.Map;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable, HasID {
+    private static Long nextId = 0L;
+    private final Long id = ++nextId;
     private String userName;
     private String password;
-    private boolean isLoggedIn;
+//    private boolean isLoggedIn;
 
-    public User(String userName, String password) {
+    User(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
-    public User() {
-        isLoggedIn = false;
-    }
+//    public User() {
+//        isLoggedIn = false;
+//    }
+
+//    public static Movie searchByTitle(String title) {
+//        Map<String, Movie> movies = Movies.getInstance().getMovies();
+//        return movies.getOrDefault(title, null);
+//    }
 
     public String getUserName() {
         return userName;
     }
-
-    public void rate(Movie movie, Double rate) {
-        if (!isLoggedIn) {
-            System.out.println("You must be logged in to rate.");
-            return;
-        }
-        movie.rate(rate);
+    public String getPassword(){
+        return password;
     }
 
-    public static Movie searchByTitle(String title) {
-        Map<String, Movie> movies = Movies.getInstance().getMovies();
-        return movies.getOrDefault(title, null);
-    }
+//    public void setRate(Movie movie, Double setRate) {
+//        if (!isLoggedIn) {
+//            System.out.println("You must be logged in to setRate.");
+//            return;
+//        }
+//        movie.setRate(setRate);
+//    }
 
-    public boolean checkPasswordIsCorrect(String password) {
-        return this.password.equals(password);
-    }
+//    public boolean checkPasswordIsCorrect(String password) {
+//        return this.password.equals(password);
+//    }
 
-    public void logIn() {
-        isLoggedIn = true;
-    }
+//    public void logIn() {
+//        isLoggedIn = true;
+//    }
+//
+//    public void logOut() {
+//        isLoggedIn = false;
+//    }
 
-    public void logOut() {
-        isLoggedIn = false;
+    public Long getId() {
+        return id;
     }
 }

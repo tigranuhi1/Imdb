@@ -1,8 +1,9 @@
 package com.aca.imdb.engine.moviepeople;
 
 public class Actor extends MoviePeople {
+    private static Long nextId = 0L;
 
-    Actor(String name, String biography) {
-        super(name, biography);
+    public Actor(String name, String biography) {
+        super(name, biography, ++nextId);
     }
 }

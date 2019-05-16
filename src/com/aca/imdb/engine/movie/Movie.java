@@ -1,32 +1,27 @@
 package com.aca.imdb.engine.movie;
 
-import com.aca.imdb.engine.Rateable;
-import com.aca.imdb.engine.moviepeople.Actor;
-import com.aca.imdb.engine.moviepeople.Director;
+import com.aca.imdb.RateEngine;
 import com.aca.imdb.engine.moviepeople.MoviePeople;
-import com.aca.imdb.engine.moviepeople.Writer;
-import org.omg.PortableInterceptor.INACTIVE;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public abstract class Movie implements Rateable {
-    Map<String, LinkedList<MoviePeople>> staff;
+public abstract class Movie implements  Serializable {
+    private static Long nextId = 0L;
+    private final Long id = ++nextId;
+    private Map<String, LinkedList<MoviePeople>> staff;
     private String title;
     private String description;
-    private Double rating;
-    private Integer ratersCount;
-    private LocalDate premierDate;
+    private LocalDate releaseDate;
 
-    Movie(String title, String description, LocalDate premierDate) {
+    public Movie(String title, String description, LocalDate premierDate) {
         this.title = title;
         this.description = description;
-        this.premierDate = premierDate;
-        this.rating = 0d;
-        this.ratersCount = 0;
+        this.releaseDate = premierDate;
 
         initializeStaff();
     }
@@ -38,11 +33,6 @@ public abstract class Movie implements Rateable {
         staff.put("Writers", new LinkedList<>());
     }
 
-    @Override
-    public void rate(Double rating) {
-        this.rating += rating;
-        ratersCount++;
-    }
 
     public String getTitle() {
         return title;
@@ -53,11 +43,11 @@ public abstract class Movie implements Rateable {
     }
 
     public Double getRating() {
-        return rating/ratersCount;
+        return RateEngine.getRate(id);
     }
 
-    public LocalDate getPremierDate() {
-        return premierDate;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
     public void addActor(MoviePeople actor) {
@@ -76,14 +66,20 @@ public abstract class Movie implements Rateable {
         return staff;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         String directors = Arrays.toString(staff.get("Directors").toArray());
         String actors = Arrays.toString(staff.get("Actors").toArray());
         String writers = Arrays.toString(staff.get("Writers").toArray());
         return String.format("Title:\t%s\n" +
                 "Description:\t%s\n" +
+                "Rating:\t%s\n" +
                 "Directors:\t%s\n" +
                 "Writer:\t%s\n" +
-                "Actors:\n\t%s\n", title, description, directors, writers, actors);
+                "Actors:\t%s\n", title, description, getRating().toString(), directors, writers, actors);
     }
 }

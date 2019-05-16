@@ -1,6 +1,6 @@
 package com.aca.imdb.engine.moviepeople;
 
-import com.aca.imdb.engine.modules.MoviePeopleType;
+import com.aca.imdb.engine.models.MoviePeopleType;
 
 public class MoviePeopleFactory {
     public MoviePeople createMoviePeople(MoviePeopleType moviePeopleType, String name, String biography){

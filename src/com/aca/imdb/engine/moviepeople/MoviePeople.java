@@ -1,19 +1,28 @@
 package com.aca.imdb.engine.moviepeople;
 
-import java.util.LinkedList;
+import com.aca.imdb.engine.HasID;
+import java.io.Serializable;
 
-public abstract class MoviePeople {
+public abstract class MoviePeople implements Serializable, HasID {
+    private final Long id;
     private String name;
-    private LinkedList movies;
     private String biography;
 
-    MoviePeople(String name, String biography){
+    MoviePeople(String name, String biography, Long id) {
         this.name = name;
         this.biography = biography;
+        this.id = id;
     }
 
-    public String toString(){
-        return String.format("Name:\t%s\n"+
-                "Biography:\t%s\n", name, biography);
+    public String toString() {
+        return String.format("Name:\t%s, " + "Biography:\t%s", name, biography);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

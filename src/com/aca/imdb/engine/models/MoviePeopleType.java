@@ -1,4 +1,4 @@
-package com.aca.imdb.engine.modules;
+package com.aca.imdb.engine.models;
 
 public enum MoviePeopleType {
     ACTOR, DIRECTOR, WRITER
